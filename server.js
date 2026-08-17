@@ -5,6 +5,7 @@ const mysql = require('mysql2/promise');
 const excel = require('exceljs');
 const path = require('path');
 const fs = require('fs');
+const os = require('os');
 
 const app = express();
 app.use(cors());
@@ -682,11 +683,13 @@ app.get('/api/export/:type/:id', async (req, res) => {
             row.commit();
         }
 
-        const exportPath = path.join(__dirname, `Export_${patient.nama.replace(/[^a-z0-9]/gi, '_')}_${type}.xlsx`);
+        const exportPath = path.join(os.tmpdir(), `Export_${patient.nama.replace(/[^a-z0-9]/gi, '_')}_${type}.xlsx`);
         await workbook.xlsx.writeFile(exportPath);
         
         res.download(exportPath, () => {
-            fs.unlinkSync(exportPath); // Hapus setelah didownload
+            if (fs.existsSync(exportPath)) {
+                fs.unlinkSync(exportPath); // Hapus setelah didownload
+            }
         });
 
     } catch (err) {
@@ -1353,7 +1356,7 @@ app.get('/api/export-rekap', async (req, res) => {
             return res.json({ data: jsonResult });
         }
 
-        const exportPath = path.join(__dirname, `Export_Rekap_${kategori.replace(/[^a-z0-9]/gi, '_')}_${tahun}.xlsx`);
+        const exportPath = path.join(os.tmpdir(), `Export_Rekap_${kategori.replace(/[^a-z0-9]/gi, '_')}_${tahun}.xlsx`);
         await workbook.xlsx.writeFile(exportPath);
         
         res.download(exportPath, () => {
