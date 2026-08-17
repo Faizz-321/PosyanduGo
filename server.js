@@ -12,6 +12,11 @@ app.use(bodyParser.json());
 // Melayani file statis (HTML, CSS, JS frontend) agar bisa jalan di 1 server (sangat cocok untuk hosting)
 app.use(express.static(__dirname));
 
+// Rute khusus untuk root '/' agar Vercel tidak error "Cannot GET /"
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'login.html'));
+});
+
 const pool = mysql.createPool({
     host: process.env.DB_HOST || 'localhost',
     user: process.env.DB_USER || 'root',

@@ -3,19 +3,15 @@
   "builds": [
     {
       "src": "server.js",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "package.json",
-      "use": "@vercel/static-build",
+      "use": "@vercel/node",
       "config": {
-        "zeroConfig": true
+        "includeFiles": ["*.html", "*.css", "*.js", "*.png", "*.xlsx"]
       }
     }
   ],
   "rewrites": [
     {
-      "source": "/api/(.*)",
+      "source": "/(.*)",
       "destination": "/server.js"
     }
   ]
