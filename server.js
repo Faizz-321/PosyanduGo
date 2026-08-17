@@ -1363,8 +1363,13 @@ app.get('/api/export-rekap', async (req, res) => {
     }
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server berjalan di port ${PORT}`);
-    console.log(`Buka http://localhost:${PORT} di browser jika jalan di komputer lokal.`);
-});
+if (process.env.NODE_ENV !== 'production') {
+    const PORT = process.env.PORT || 3000;
+    app.listen(PORT, () => {
+        console.log(`Server berjalan di port ${PORT}`);
+        console.log(`Buka http://localhost:${PORT} di browser jika jalan di komputer lokal.`);
+    });
+}
+
+// Export aplikasi untuk environment Serverless (seperti Vercel)
+module.exports = app;
