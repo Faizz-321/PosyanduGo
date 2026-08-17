@@ -9,12 +9,14 @@ const fs = require('fs');
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
+// Melayani file statis (HTML, CSS, JS frontend) agar bisa jalan di 1 server (sangat cocok untuk hosting)
+app.use(express.static(__dirname));
 
 const pool = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'posyandugo'
+    host: process.env.DB_HOST || 'localhost',
+    user: process.env.DB_USER || 'root',
+    password: process.env.DB_PASSWORD || '',
+    database: process.env.DB_NAME || 'posyandugo'
 });
 
 // ==========================================
@@ -1361,8 +1363,8 @@ app.get('/api/export-rekap', async (req, res) => {
     }
 });
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`Server Backend berjalan di http://localhost:${PORT}`);
-    console.log(`Pastikan database MySQL 'posyandugo' sudah dibuat dan memiliki 6 tabel baru.`);
+    console.log(`Server berjalan di port ${PORT}`);
+    console.log(`Buka http://localhost:${PORT} di browser jika jalan di komputer lokal.`);
 });
