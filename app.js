@@ -1984,27 +1984,27 @@ async function loadAkun() {
     }
 }
 
-async function hapusAkun(id) {
-    const isConfirmed = await showCustomConfirm("Yakin ingin menghapus akun posyandu ini?");
-    if(!isConfirmed) return;
-    try {
-        const res = await fetch(`${API_URL}/users/${id}`, { method: 'DELETE' });
-        
-        if (!res.ok) {
-            const contentType = res.headers.get("content-type");
-            if (contentType && contentType.indexOf("application/json") !== -1) {
-                const data = await res.json();
-                throw new Error(data.error || "Gagal menghapus dari server");
-            } else {
-                throw new Error("Server error " + res.status);
+function hapusAkun(id) {
+    showConfirm("Yakin ingin menghapus akun posyandu ini?", async () => {
+        try {
+            const res = await fetch(`${API_URL}/users/${id}`, { method: 'DELETE' });
+            
+            if (!res.ok) {
+                const contentType = res.headers.get("content-type");
+                if (contentType && contentType.indexOf("application/json") !== -1) {
+                    const data = await res.json();
+                    throw new Error(data.error || "Gagal menghapus dari server");
+                } else {
+                    throw new Error("Server error " + res.status);
+                }
             }
+            
+            showCustomAlert("Akun berhasil dihapus!");
+            loadAkun();
+        } catch(err) {
+            showCustomAlert("Gagal menghapus akun: " + err.message);
         }
-        
-        showCustomAlert("Akun berhasil dihapus!");
-        loadAkun();
-    } catch(err) {
-        showCustomAlert("Gagal menghapus akun: " + err.message);
-    }
+    });
 }
 
 function showCustomAlert(msg) {
@@ -2018,41 +2018,6 @@ function showCustomAlert(msg) {
     }
 }
 
-function showCustomConfirm(msg) {
-    return new Promise((resolve) => {
-        const modal = document.getElementById('modalConfirm');
-        const msgEl = document.getElementById('customConfirmMessage');
-        const btnYes = document.getElementById('btnConfirmYes');
-        const btnNo = document.getElementById('btnConfirmNo');
-        
-        if (!modal || !msgEl || !btnYes || !btnNo) {
-            resolve(confirm(msg)); // Fallback
-            return;
-        }
-
-        msgEl.textContent = msg;
-        modal.classList.remove('hidden');
-        
-        const handleYes = () => {
-            modal.classList.add('hidden');
-            cleanup();
-            resolve(true);
-        };
-        const handleNo = () => {
-            modal.classList.add('hidden');
-            cleanup();
-            resolve(false);
-        };
-
-        const cleanup = () => {
-            btnYes.removeEventListener('click', handleYes);
-            btnNo.removeEventListener('click', handleNo);
-        };
-
-        btnYes.addEventListener('click', handleYes);
-        btnNo.addEventListener('click', handleNo);
-    });
-}
 
 function ubahSandiAkun(id) {
     document.getElementById('formUbahSandi').reset();
