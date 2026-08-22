@@ -1973,6 +1973,7 @@ async function loadAkun() {
                 <td>${u.username}</td>
                 <td><span style="background:#dbeafe; color:#1e40af; padding:2px 6px; border-radius:4px; font-size:12px;">${u.role}</span></td>
                 <td>
+                    <button class="btn btn-warning" style="font-size: 12px; padding: 6px 10px; margin-right: 4px; background-color: #f59e0b; color: white; border: none; border-radius: 4px; cursor: pointer;" onclick="ubahSandiAkun(${u.id})">🔑 Ubah Sandi</button>
                     <button class="btn btn-danger" style="font-size: 12px; padding: 6px 10px;" onclick="hapusAkun(${u.id})">🗑️ Hapus</button>
                 </td>
             `;
@@ -1990,6 +1991,30 @@ async function hapusAkun(id) {
         loadAkun();
     } catch(err) {
         alert("Gagal menghapus akun: " + err.message);
+    }
+}
+
+async function ubahSandiAkun(id) {
+    const newPassword = prompt("Masukkan sandi baru untuk akun ini:");
+    if (!newPassword || newPassword.trim() === '') return;
+    
+    try {
+        const res = await fetch(`${API_URL}/users/${id}/password`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ password: newPassword.trim() })
+        });
+        
+        const data = await res.json();
+        if (res.ok) {
+            alert('Sandi berhasil diubah!');
+        } else {
+            alert('Gagal mengubah sandi: ' + (data.error || 'Terjadi kesalahan'));
+        }
+    } catch(err) {
+        alert("Gagal mengubah sandi: " + err.message);
     }
 }
 

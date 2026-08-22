@@ -85,6 +85,19 @@ app.delete('/api/users/:id', async (req, res) => {
     }
 });
 
+app.put('/api/users/:id/password', async (req, res) => {
+    try {
+        const { password } = req.body;
+        if (!password) return res.status(400).json({ error: 'Password baru harus diisi' });
+        
+        await pool.query('UPDATE users SET password = ? WHERE id = ?', [password, req.params.id]);
+        res.json({ message: 'Password berhasil diubah' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: err.message });
+    }
+});
+
 // ==========================================
 // 1. DATA PASIEN
 // ==========================================
