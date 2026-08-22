@@ -254,7 +254,7 @@ function closeModal(id) {
 // ==========================================
 async function loadPatients() {
     try {
-        const res = await fetch(`${API_URL}/patients?kategori=${encodeURIComponent(currentCategory)}`);
+        const res = await fetch(`${API_URL}/patients?kategori=${encodeURIComponent(currentCategory)}`, { cache: 'no-store' });
         patients = await res.json();
         applyFilters();
     } catch (err) {
@@ -1958,7 +1958,7 @@ function bukaModalAkun() {
 
 async function loadAkun() {
     try {
-        const res = await fetch(`${API_URL}/users`);
+        const res = await fetch(`${API_URL}/users`, { cache: 'no-store' });
         const users = await res.json();
         const tbody = document.getElementById('akunList');
         tbody.innerHTML = '';
@@ -1988,7 +1988,18 @@ async function hapusAkun(id) {
     const isConfirmed = await showCustomConfirm("Yakin ingin menghapus akun posyandu ini?");
     if(!isConfirmed) return;
     try {
-        await fetch(`${API_URL}/users/${id}`, { method: 'DELETE' });
+        const res = await fetch(`${API_URL}/users/${id}`, { method: 'DELETE' });
+        
+        if (!res.ok) {
+            const contentType = res.headers.get("content-type");
+            if (contentType && contentType.indexOf("application/json") !== -1) {
+                const data = await res.json();
+                throw new Error(data.error || "Gagal menghapus dari server");
+            } else {
+                throw new Error("Server error " + res.status);
+            }
+        }
+        
         showCustomAlert("Akun berhasil dihapus!");
         loadAkun();
     } catch(err) {
