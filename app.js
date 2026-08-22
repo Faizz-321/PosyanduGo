@@ -1994,6 +1994,17 @@ async function hapusAkun(id) {
     }
 }
 
+function showCustomAlert(msg) {
+    const alertMsg = document.getElementById('customAlertMessage');
+    const modalAlert = document.getElementById('modalAlert');
+    if (alertMsg && modalAlert) {
+        alertMsg.textContent = msg;
+        modalAlert.classList.remove('hidden');
+    } else {
+        alert(msg); // Fallback
+    }
+}
+
 function ubahSandiAkun(id) {
     document.getElementById('formUbahSandi').reset();
     document.getElementById('ubahSandiAccountId').value = id;
@@ -2023,13 +2034,13 @@ if (document.getElementById('formUbahSandi')) {
             
             const data = await res.json();
             if (res.ok) {
-                alert('Sandi berhasil diubah!');
+                showCustomAlert('Sandi berhasil diubah!');
                 closeModal('modalUbahSandi');
             } else {
-                alert('Gagal mengubah sandi: ' + (data.error || 'Terjadi kesalahan'));
+                showCustomAlert('Gagal mengubah sandi: ' + (data.error || 'Terjadi kesalahan'));
             }
         } catch(err) {
-            alert("Gagal mengubah sandi: " + err.message);
+            showCustomAlert("Gagal mengubah sandi: " + err.message);
         } finally {
             btn.disabled = false;
             btn.textContent = 'Simpan Sandi Baru';

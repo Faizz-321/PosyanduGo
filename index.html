@@ -424,6 +424,16 @@
         </div>
     </div>
 
+    <!-- Modal Alert Umum -->
+    <div class="modal-overlay hidden" id="modalAlert" style="z-index: 9999;">
+        <div class="modal-content" style="max-width: 350px; text-align: center;">
+            <div class="modal-body" style="padding: 30px 20px 20px;">
+                <h4 id="customAlertMessage" style="margin-bottom: 24px; font-weight: 500; font-size: 16px; color: var(--text-main);">Pesan</h4>
+                <button class="btn btn-primary" onclick="closeModal('modalAlert')" style="width: 100%; border-radius: 8px;">OK</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Script Utama -->
     <script src="app.js?v=7"></script>
 </body>
