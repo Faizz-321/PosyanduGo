@@ -1985,12 +1985,14 @@ async function loadAkun() {
 }
 
 async function hapusAkun(id) {
-    if(!confirm("Yakin ingin menghapus akun posyandu ini?")) return;
+    const isConfirmed = await showCustomConfirm("Yakin ingin menghapus akun posyandu ini?");
+    if(!isConfirmed) return;
     try {
         await fetch(`${API_URL}/users/${id}`, { method: 'DELETE' });
+        showCustomAlert("Akun berhasil dihapus!");
         loadAkun();
     } catch(err) {
-        alert("Gagal menghapus akun: " + err.message);
+        showCustomAlert("Gagal menghapus akun: " + err.message);
     }
 }
 
@@ -2003,6 +2005,42 @@ function showCustomAlert(msg) {
     } else {
         alert(msg); // Fallback
     }
+}
+
+function showCustomConfirm(msg) {
+    return new Promise((resolve) => {
+        const modal = document.getElementById('modalConfirm');
+        const msgEl = document.getElementById('customConfirmMessage');
+        const btnYes = document.getElementById('btnConfirmYes');
+        const btnNo = document.getElementById('btnConfirmNo');
+        
+        if (!modal || !msgEl || !btnYes || !btnNo) {
+            resolve(confirm(msg)); // Fallback
+            return;
+        }
+
+        msgEl.textContent = msg;
+        modal.classList.remove('hidden');
+        
+        const handleYes = () => {
+            modal.classList.add('hidden');
+            cleanup();
+            resolve(true);
+        };
+        const handleNo = () => {
+            modal.classList.add('hidden');
+            cleanup();
+            resolve(false);
+        };
+
+        const cleanup = () => {
+            btnYes.removeEventListener('click', handleYes);
+            btnNo.removeEventListener('click', handleNo);
+        };
+
+        btnYes.addEventListener('click', handleYes);
+        btnNo.addEventListener('click', handleNo);
+    });
 }
 
 function ubahSandiAkun(id) {
