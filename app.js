@@ -1994,28 +1994,47 @@ async function hapusAkun(id) {
     }
 }
 
-async function ubahSandiAkun(id) {
-    const newPassword = prompt("Masukkan sandi baru untuk akun ini:");
-    if (!newPassword || newPassword.trim() === '') return;
-    
-    try {
-        const res = await fetch(`${API_URL}/users/${id}/password`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ password: newPassword.trim() })
-        });
+function ubahSandiAkun(id) {
+    document.getElementById('formUbahSandi').reset();
+    document.getElementById('ubahSandiAccountId').value = id;
+    document.getElementById('modalUbahSandi').classList.remove('hidden');
+}
+
+if (document.getElementById('formUbahSandi')) {
+    document.getElementById('formUbahSandi').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const id = document.getElementById('ubahSandiAccountId').value;
+        const newPassword = document.getElementById('inputSandiBaru').value;
         
-        const data = await res.json();
-        if (res.ok) {
-            alert('Sandi berhasil diubah!');
-        } else {
-            alert('Gagal mengubah sandi: ' + (data.error || 'Terjadi kesalahan'));
+        if (!newPassword || newPassword.trim() === '') return;
+        
+        const btn = e.target.querySelector('button[type="submit"]');
+        btn.disabled = true;
+        btn.textContent = 'Menyimpan...';
+
+        try {
+            const res = await fetch(`${API_URL}/users/${id}/password`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ password: newPassword.trim() })
+            });
+            
+            const data = await res.json();
+            if (res.ok) {
+                alert('Sandi berhasil diubah!');
+                closeModal('modalUbahSandi');
+            } else {
+                alert('Gagal mengubah sandi: ' + (data.error || 'Terjadi kesalahan'));
+            }
+        } catch(err) {
+            alert("Gagal mengubah sandi: " + err.message);
+        } finally {
+            btn.disabled = false;
+            btn.textContent = 'Simpan Sandi Baru';
         }
-    } catch(err) {
-        alert("Gagal mengubah sandi: " + err.message);
-    }
+    });
 }
 
 document.getElementById('formAkun').addEventListener('submit', async (e) => {

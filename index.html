@@ -402,6 +402,28 @@
         </div>
     </div>
 
+    <!-- Modal Ubah Sandi -->
+    <div class="modal-overlay hidden" id="modalUbahSandi">
+        <div class="modal-content" style="max-width: 400px;">
+            <div class="modal-header">
+                <div>
+                    <h3 style="margin-bottom: 0;">Ubah Kata Sandi</h3>
+                </div>
+                <button class="btn-close" onclick="closeModal('modalUbahSandi')">✕</button>
+            </div>
+            <div class="modal-body">
+                <form id="formUbahSandi">
+                    <input type="hidden" id="ubahSandiAccountId">
+                    <div class="form-group">
+                        <label>Sandi Baru</label>
+                        <input type="text" id="inputSandiBaru" class="form-control" required placeholder="Masukkan kata sandi baru">
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 8px;">Simpan Sandi Baru</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- Script Utama -->
     <script src="app.js?v=7"></script>
 </body>
