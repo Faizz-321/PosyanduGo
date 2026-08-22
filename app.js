@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         document.getElementById('page-title').textContent = 'Daftar Pasien Bayi & Balita';
         const filterBayiContainer = document.getElementById('filterBayiContainer');
-        if (filterBayiContainer) filterBayiContainer.style.display = 'flex';
+        if (filterBayiContainer) filterBayiContainer.style.display = 'none';
         
         // Sembunyikan tombol Tambah Pasien Baru
         const btnTambah = document.getElementById('btnTambahPasien');
@@ -123,7 +123,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 const filterBayiContainer = document.getElementById('filterBayiContainer');
                 if (filterBayiContainer) {
-                    if (currentCategory === 'Bayi, Balita & Pra-Sekolah' || currentCategory === 'Bayi & Balita') {
+                    if ((currentCategory === 'Bayi, Balita & Pra-Sekolah' || currentCategory === 'Bayi & Balita') && (!currentUser || currentUser.role !== 'Puskesmas')) {
                         filterBayiContainer.style.display = 'flex';
                     } else {
                         filterBayiContainer.style.display = 'none';
