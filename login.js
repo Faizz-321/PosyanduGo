@@ -1,10 +1,10 @@
 const API_URL = '/api';
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Cek apakah sudah login, jika sudah langsung ke index.html
+    // Cek apakah sudah login, jika sudah langsung ke dashboard.html
     const session = sessionStorage.getItem('posyandugo_user');
     if (session) {
-        window.location.href = 'index.html';
+        window.location.href = 'dashboard.html';
         return;
     }
 
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
             sessionStorage.setItem('posyandugo_user', JSON.stringify(data.user));
             
             // Redirect ke halaman utama
-            window.location.href = 'index.html';
+            window.location.href = 'dashboard.html';
             
         } catch (err) {
             console.error(err);
