@@ -34,6 +34,23 @@ function togglePasswordVisibility(inputId, btn) {
 }
 
 // ==========================================
+// CUSTOM ALERT (GANTI BROWSER ALERT)
+// ==========================================
+function showAlert(message) {
+    const el = document.getElementById('customAlertMessage');
+    if (el) {
+        el.textContent = message;
+        const overlay = document.getElementById('modalAlert');
+        if (overlay) {
+            overlay.classList.remove('hidden');
+            return;
+        }
+    }
+    // Fallback jika modal belum ada
+    alert(message);
+}
+
+// ==========================================
 // INISIALISASI & EVENT LISTENERS
 // ==========================================
 document.addEventListener('DOMContentLoaded', () => {
@@ -2125,8 +2142,8 @@ document.getElementById('formAkun').addEventListener('submit', async (e) => {
         }
         closeModal('modalAkun');
         loadAkun();
-        alert("Akun posyandu berhasil ditambahkan!");
+        showAlert("Akun posyandu berhasil ditambahkan!");
     } catch(err) {
-        alert(err.message);
+        showAlert(err.message);
     }
 });
