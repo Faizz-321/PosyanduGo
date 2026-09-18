@@ -364,11 +364,25 @@ function renderTable(data) {
                     <div style="display:flex; flex-direction:column; gap:4px;">
                         ${exportButtons}
                     </div>
-                    ${currentUser && currentUser.role !== 'Puskesmas' ? `
-                    <div style="display:flex; gap:4px; margin-top:4px;">
-                        <button class="btn btn-secondary" style="font-size: 12px; padding: 6px 10px; flex: 1;" onclick="editPasien(${p.id_pasien})">✏️ Edit</button>
-                        <button class="btn btn-danger" style="font-size: 12px; padding: 6px 10px; flex: 1;" onclick="hapusPasien(${p.id_pasien})">🗑️ Hapus</button>
-                    </div>` : ''}
+                    ${(() => {
+                        const isBukanPuskesmas = currentUser && currentUser.role !== 'Puskesmas';
+                        const isBayiBalita = p.kategori === 'Bayi & Balita' || p.kategori === 'Bayi, Balita & Pra-Sekolah';
+                        const isStunting = p.tb_pendek == 1 || p.tb_pendek === 'Stunting' || p.tb_pendek === 'Sangat Pendek (Stunting)' || p.tb_pendek === 'Pendek (Stunting)';
+                        
+                        if (isBukanPuskesmas) {
+                            return `
+                            <div style="display:flex; gap:4px; margin-top:4px;">
+                                <button class="btn btn-secondary" style="font-size: 12px; padding: 6px 10px; flex: 1;" onclick="editPasien(${p.id_pasien})">✏️ Edit</button>
+                                <button class="btn btn-danger" style="font-size: 12px; padding: 6px 10px; flex: 1;" onclick="hapusPasien(${p.id_pasien})">🗑️ Hapus</button>
+                            </div>`;
+                        } else if (currentUser && currentUser.role === 'Puskesmas' && isBayiBalita && isStunting) {
+                            return `
+                            <div style="display:flex; gap:4px; margin-top:4px;">
+                                <button class="btn btn-danger" style="font-size: 12px; padding: 6px 10px; flex: 1;" onclick="hapusPasien(${p.id_pasien})">🗑️ Hapus</button>
+                            </div>`;
+                        }
+                        return '';
+                    })()}
                 </div>
             </td>
         `;
