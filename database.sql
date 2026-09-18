@@ -220,5 +220,5 @@ CREATE TABLE IF NOT EXISTS users (
 
 -- Data Default (Kader dan Puskesmas)
 INSERT IGNORE INTO users (username, password, role, nama_posyandu) VALUES 
-('PuskesmassCempae@gmail.com', 'PuskesmasCempae', 'Puskesmas', NULL);
+('PuskesmasCempae@gmail.com', 'PuskesmasCempae', 'Puskesmas', NULL);
 

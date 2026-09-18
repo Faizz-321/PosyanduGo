@@ -20,7 +20,7 @@ async function run() {
         `);
         await pool.query(`
             INSERT IGNORE INTO users (username, password, role) VALUES 
-            ('PuskesmassCempae@gmail.com', 'PuskesmasCempae', 'Puskesmas');
+            ('PuskesmasCempae@gmail.com', 'PuskesmasCempae', 'Puskesmas');
         `);
         console.log("Database updated successfully");
     } catch (e) {
