@@ -220,6 +220,5 @@ CREATE TABLE IF NOT EXISTS users (
 
 -- Data Default (Kader dan Puskesmas)
 INSERT IGNORE INTO users (username, password, role, nama_posyandu) VALUES 
-('kader', 'kader123', 'Kader Posyandu', 'Posyandu Utama'),
 ('puskesmas', 'puskesmas123', 'Puskesmas', NULL);
 

@@ -54,7 +54,6 @@ CREATE TABLE `data_pasien` (
 
 LOCK TABLES `data_pasien` WRITE;
 /*!40000 ALTER TABLE `data_pasien` DISABLE KEYS */;
-INSERT INTO `data_pasien` VALUES (1,'Bayi & Balita',NULL,'klnlkn','sjj','2026-03-11','Laki-laki','3232','3232323233','23','32',23.00,31.70,'','',NULL,NULL,NULL,'','','posyandu pusri'),(2,'Ibu Hamil',NULL,'1234567890098765','hjsfdj','2000-07-03','Perempuan','hdjf','12345678900','','',NULL,NULL,'ad','11',38,56.00,67.00,'','','posyandu pusri'),(3,'Ibu Hamil',NULL,'jakdhkjasdhlk','hasdjkg','2000-02-12','Perempuan','ewqwe','12345678909','','',NULL,NULL,'AD','2',3,64.80,54.80,'','','posyandu pusri'),(4,'Ibu Hamil',NULL,'0987654321123456','wrtq','2000-04-03','Perempuan','gfhghgf','12345678909','','',NULL,NULL,'kjkjdsfh','jfhhdfkj',1,78.00,78.20,'','','posyandu pusri'),(5,'Bayi & Balita',NULL,'7372073406250001','Faradiba','2025-06-14','Perempuan','jl. laupe','08234567899','Yunita','Aswan',10.90,96.00,'','',NULL,NULL,NULL,'','','posyandu pusri'),(7,'Bayi & Balita',NULL,'1234567890987654','fais','2026-07-03','Laki-laki','jl...','12345678909','ad','deh',4.00,40.00,'','',NULL,NULL,NULL,'','','posyandu pusri'),(8,'Ibu Hamil','Ibu Nifas/Menyusui','1234567890987654','aisdh','2026-11-10','Perempuan','kh','12345678909','','',NULL,NULL,'ad','deh',1,12.00,150.00,'','','posyandu pusri');
 /*!40000 ALTER TABLE `data_pasien` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -105,7 +104,6 @@ CREATE TABLE `skrining_bayi_balita` (
 
 LOCK TABLES `skrining_bayi_balita` WRITE;
 /*!40000 ALTER TABLE `skrining_bayi_balita` DISABLE KEYS */;
-INSERT INTO `skrining_bayi_balita` VALUES (1,1,'2026-08-10',2,0,23.00,1,0,32.00,'1',0,323.00,0,32.00,0,1,1,1,0,0,0,'323',0,0,0,'afddsdasd','323'),(2,1,'2026-09-10',5,1,23.00,1,0,23.00,'0',0,32.00,1,32.00,0,1,0,0,0,1,1,'32',1,1,1,'adaa','tidak ada'),(7,7,'2026-08-09',1,1,3.00,NULL,NULL,40.00,'Sangat Pendek (Stunting)',0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'',NULL),(8,7,'2026-09-10',2,NULL,5.00,NULL,NULL,30.00,'Sangat Pendek (Stunting)',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'',NULL),(9,7,'2026-10-10',3,NULL,7.00,NULL,NULL,60.00,'Normal',0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'',NULL),(10,7,'2026-11-10',2,NULL,5.00,NULL,NULL,20.00,'Stunting',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'',NULL),(11,1,'2026-11-10',1,NULL,5.00,NULL,NULL,40.00,'Stunting',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'',NULL),(12,5,'2026-11-10',2,NULL,7.00,0,0,70.00,'Stunting',0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'',NULL),(13,5,'2026-12-10',5,NULL,7.00,NULL,NULL,87.00,'Normal',0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'',NULL);
 /*!40000 ALTER TABLE `skrining_bayi_balita` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -249,7 +247,6 @@ CREATE TABLE `skrining_ibu_hamil` (
 
 LOCK TABLES `skrining_ibu_hamil` WRITE;
 /*!40000 ALTER TABLE `skrining_ibu_hamil` DISABLE KEYS */;
-INSERT INTO `skrining_ibu_hamil` VALUES (1,2,'2026-08-10',3,80.00,1,89.20,1,110,90,1,0,1,0,1,'12',1,'tidak',0,1,'jkgsalkgsdakf','tidak'),(2,3,'2026-08-10',4,80.00,1,90.00,1,120,90,1,0,1,0,1,'12',1,'12',1,1,'dmnbsdabsdamn','tidak'),(3,4,'2026-08-10',8,170.00,1,118.90,1,120,90,1,1,1,1,1,'12',1,'tidak',0,1,'jkagskjlghalkfdf','tdiak');
 /*!40000 ALTER TABLE `skrining_ibu_hamil` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -365,7 +362,6 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'pusri','pusri123','Kader Posyandu','posyandu pusri'),(2,'puskesmas','puskesmas123','Puskesmas',NULL),(4,'Melati','Melati123','Kader Posyandu','Posyandu Melati');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -379,3 +375,5 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2026-08-17 15:37:58
+
+INSERT INTO `users` VALUES (2,'puskesmas','puskesmas123','Puskesmas',NULL);
