@@ -200,6 +200,21 @@ app.delete('/api/patients/:id', async (req, res) => {
 
 // ==========================================
 // 2. SKRINING (DINAMIS 6 TABEL)
+
+// Helper: konversi nilai string form menjadi INT untuk kolom-kolom INT di skrining_bayi_balita
+function normalizeBayiBalitaData(data) {
+    const result = { ...data };
+    // tb_pendek: 'Stunting'/'Sangat Pendek (Stunting)'/'Pendek (Stunting)' = 1, 'Normal'/'Tinggi (Lebih)' = 0
+    if (result.tb_pendek !== undefined && result.tb_pendek !== null && result.tb_pendek !== '') {
+        const val = result.tb_pendek;
+        if (val === 'Stunting' || val === 'Sangat Pendek (Stunting)' || val === 'Pendek (Stunting)' || val === '1' || val === 1) {
+            result.tb_pendek = 1;
+        } else if (val === 'Normal' || val === 'Tinggi (Lebih)' || val === '0' || val === 0) {
+            result.tb_pendek = 0;
+        }
+    }
+    return result;
+}
 // ==========================================
 app.post('/api/screening/:type', async (req, res) => {
     const type = req.params.type;
@@ -215,8 +230,9 @@ app.post('/api/screening/:type', async (req, res) => {
     else return res.status(400).json({ error: 'Tipe skrining tidak valid' });
 
     try {
-        const keys = Object.keys(data);
-        const values = Object.values(data);
+        const normalizedData = (type === 'bayi_balita') ? normalizeBayiBalitaData(data) : data;
+        const keys = Object.keys(normalizedData);
+        const values = Object.values(normalizedData);
         const placeholders = keys.map(() => '?').join(',');
 
         const sql = `INSERT INTO ${tableName} (${keys.join(',')}) VALUES (${placeholders})`;
@@ -244,8 +260,9 @@ app.put('/api/screening/:type/:id', async (req, res) => {
     else return res.status(400).json({ error: 'Tipe skrining tidak valid' });
 
     try {
-        const keys = Object.keys(data);
-        const values = Object.values(data);
+        const normalizedData = (type === 'bayi_balita') ? normalizeBayiBalitaData(data) : data;
+        const keys = Object.keys(normalizedData);
+        const values = Object.values(normalizedData);
         const setClause = keys.map(k => `${k} = ?`).join(',');
 
         const sql = `UPDATE ${tableName} SET ${setClause} WHERE id_skrining = ?`;
